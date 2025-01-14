@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import {ref, computed, watch} from 'vue';
 import { fetchCurrenciesByDate } from '../services/currencyService';
 import CurrencyList from '../components/CurrencyList.vue';
 import Pagination from '../components/Pagination.vue';
@@ -55,6 +55,11 @@ const paginatedFilteredCurrencies = computed(() => {
   const start = (currentPage.value - 1) * ITEMS_PER_PAGE;
   const end = start + ITEMS_PER_PAGE;
   return filteredCurrencies.value.slice(start, end);
+});
+
+
+watch(searchTerm, () => {
+  currentPage.value = 1;
 });
 
 function handleSearch() {
